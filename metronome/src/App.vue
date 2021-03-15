@@ -14,6 +14,7 @@
       <div class="measure-count">4</div>
       <div class="add-beats stepper">+</div>
    </div>
+   <span class="beats-per-measure-text">beats per measure</span>
    </div>
       
   </div>
@@ -123,6 +124,13 @@ export default {
   line-height: 30px;
 }
 .measures .measure-count {
+  line-height: 30px;
   font-size: 1em;
 } 
+.beats-per-measure-text{
+  margin: 10px;
+  text-align: center;
+  font-size: 0.7em;
+  text-transform: uppercase;
+}
 </style>

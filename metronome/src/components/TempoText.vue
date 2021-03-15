@@ -11,7 +11,7 @@ export default {
 
 <style>
 .tempo-text {
-    font-size: 2em;
+    font-size: 1.5em;
     text-transform: uppercase;
     text-align: center;
 }

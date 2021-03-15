@@ -101,21 +101,25 @@ export default {
 .measures {
   display: flex;
   justify-content: center;
+  font-size: 28px;
 }
 .measures .stepper {
-  width: 20px;
-  height: 20px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
   border: 1px solid #ddd;
   text-align: center;
-  margin: 0 5px;
+  margin: 0 10px;
   cursor: pointer;
 }
 .measures .stepper:hover {
   background: red;
   color: white;
 }
-.measures add-beats {
+.measures .subtract-beats {
+  line-height: 30px;
+}
+.measures .add-beats {
   line-height: 30px;
 }
 .measures .measure-count {

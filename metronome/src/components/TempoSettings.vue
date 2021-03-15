@@ -24,11 +24,12 @@ input[type=range]:focus{
 
 input[type=range]::-webkit-slider-thumb {
     -webkit-appearance: none;
-    width: 16px;
-    height: 16px;
+    width: 20px;
+    height: 20px;
     border-radius: 50%;
     background: red;
     cursor: pointer;
+    margin-top: -9px;
     
 }
 
@@ -42,8 +43,8 @@ input[type=range]::-moz-range-thumb {
     border: none;
 }
 
-input[type=range] ::-webkit-slider-runnable-track {
-    width: 100px;
+input[type=range]::-webkit-slider-runnable-track {
+    width: 100%;
     height: 1px;
     background: #ddd;
 }

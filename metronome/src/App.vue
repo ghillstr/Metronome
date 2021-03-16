@@ -11,7 +11,7 @@
     <input type="range" min="20" max="280" step="1" v-model="tempo" class="slider">
     <div class="adjust-tempo-btn increase-tempo"  v-on:click="increase">+</div>
     </div>
-    <div class="start-stop">START</div>
+    <div class="start-stop" v-on:click="startMetronome">{{ startStop }}</div>
     <div class="measures">
       <div class="subtract-beats stepper" v-on:click="decreaseCount">-</div>
       <div class="measure-count">{{measureCount}}</div>
@@ -24,6 +24,9 @@
 </template>
 
 <script>
+import Metronome1 from './assets/Metronome1.wav' 
+import MetronomeUp1 from './assets/MetronomeUp1.wav'
+//const metronome = new Timer(playClick, 60000 / tempo, {immediate: true}); 
 
 
 export default {
@@ -33,6 +36,9 @@ data() {
   return {
     tempo: 140,
     measureCount: 4,
+    count : 0,
+    isRunning : false,
+    startStop : 'START'
   };
 },
  computed: {
@@ -92,9 +98,37 @@ methods: {
     }
     this.measureCount -= 1;     
   },
+  startMetronome(){
+    this.count = 0;
+    if (!this.isRunning) {
+      //metronome.start();
+      this.isRunning = true;
+      this.startStop = 'START';
+    } else {
+      //metronome.stop();
+      this.isRunning = false;
+      this.startStop = 'STOP';
+    }
+    
+  },
+  playClick() {
+    if (this.count === this.measureCount){
+      this.count = 0;
+    }
+    if (this.count === 0) {
+      Metronome1.play();
+      Metronome1.currentTime = 0;
+    } else {
+      MetronomeUp1.play();
+      MetronomeUp1.currentTime = 0;
+
+    }
+    this.count ++;
+  }
+
+    }
+  };
  
-},
-};
 
 </script>
 

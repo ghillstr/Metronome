@@ -5,7 +5,7 @@
     <span class="tempo">{{tempo}}</span>
     <span class="bpm">BPM</span>
    </div>
-    <tempo-text/>
+    <div class="tempo-text">{{ setTempoText }}</div>
     <div class="tempo-settings">
     <div class="adjust-tempo-btn decrease-tempo" v-on:click="decrease">-</div>
     <input type="range" min="20" max="280" step="1" v-model="tempo" class="slider">
@@ -26,34 +26,74 @@
 <script>
 
 
-import TempoText from './components/TempoText.vue'
-
 export default {
   name: 'App',
-  components: {
-   
-    TempoText
-  },
+  
 data() {
   return {
     tempo: 140,
-    measureCount: 4
+    measureCount: 4,
   };
 },
+ computed: {
+    setTempoText() {
+      if (this.tempo <= 45){
+         return  'Grave';
+      } 
+      else if  (this.tempo > 45 && this.tempo <= 60){
+         return  'Lento';
+     }
+      else if (this.tempo > 60  && this.tempo <= 75){
+        return  'Adagio';
+      }
+      else if (this.tempo > 75  && this.tempo <= 108){
+        return  'Andante'}
+      else if (this.tempo > 108  && this.tempo <= 120) {
+        return  'Moderato';
+      }
+      else if (this.tempo > 120  && this.tempo <= 156) {
+        return 'Allegro';
+      }
+      else if (this.tempo > 156  && this.tempo <= 176) {
+        return 'Vivace';
+        }
+      else if (this.tempo > 176  && this.tempo <= 200) {
+        return 'Presto';
+      }
+       else if (this.tempo > 200){
+        return 'Prestissmo';
+       }
+        else {
+          return 'Allegro';
+        }
+
+      }
+    },
+
 methods: {
   increase() {
-    this.tempo += 1;
+    if(this.tempo >= 280){
+      return this.tempo = 280;
+    }
+      this.tempo += 1;
   },
   decrease() {
-    this.tempo-= 1;
+    if(this.tempo <= 20){
+      return this.tempo = 20;
+    }
+    this.tempo -= 1;
   },
   increaseCount() {
     this.measureCount += 1;
   },
   decreaseCount() {
-    this.measureCount -= 1;
+    if (this.measureCount <= 1){
+    return this.measureCount = 1;
+    }
+    this.measureCount -= 1;     
   },
-}
+ 
+},
 };
 
 </script>

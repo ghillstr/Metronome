@@ -1,4 +1,5 @@
 <template>
+
   <input type="range" min="20" max="280" step="1" class="slider">
 </template>
 

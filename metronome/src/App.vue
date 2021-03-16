@@ -1,18 +1,21 @@
 <template>
   <div id="app">
     <div class="metronome">
-    <tempo-number/>
+     <div class="bpm-display">   
+    <span class="tempo">{{tempo}}</span>
+    <span class="bpm">BPM</span>
+   </div>
     <tempo-text/>
     <div class="tempo-settings">
-    <div class="adjust-tempo-btn decrease-tempo">-</div>
-    <tempo-settings/>
-    <div class="adjust-tempo-btn increase-tempo">+</div>
+    <div class="adjust-tempo-btn decrease-tempo" v-on:click="decrease">-</div>
+    <input type="range" min="20" max="280" step="1" v-model="tempo" class="slider">
+    <div class="adjust-tempo-btn increase-tempo"  v-on:click="increase">+</div>
     </div>
     <div class="start-stop">START</div>
     <div class="measures">
-      <div class="subtract-beats stepper">-</div>
-      <div class="measure-count">4</div>
-      <div class="add-beats stepper">+</div>
+      <div class="subtract-beats stepper" v-on:click="decreaseCount">-</div>
+      <div class="measure-count">{{measureCount}}</div>
+      <div class="add-beats stepper"  v-on:click="increaseCount">+</div>
    </div>
    <span class="beats-per-measure-text">beats per measure</span>
    </div>
@@ -21,18 +24,38 @@
 </template>
 
 <script>
-import TempoNumber from './components/TempoNumber.vue'
-import TempoSettings from './components/TempoSettings.vue'
+
+
 import TempoText from './components/TempoText.vue'
 
 export default {
   name: 'App',
   components: {
-    TempoNumber,
-    TempoSettings,
+   
     TempoText
-  }
+  },
+data() {
+  return {
+    tempo: 140,
+    measureCount: 4
+  };
+},
+methods: {
+  increase() {
+    this.tempo += 1;
+  },
+  decrease() {
+    this.tempo-= 1;
+  },
+  increaseCount() {
+    this.measureCount += 1;
+  },
+  decreaseCount() {
+    this.measureCount -= 1;
+  },
 }
+};
+
 </script>
 
 <style>
@@ -47,6 +70,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  user-select: none;
 }
 
 .metronome {
@@ -56,6 +80,16 @@ export default {
   width: 300px;
   height: 450px;
   justify-content: space-between;
+}
+.bpm-display{
+  width:100%;
+  text-align: center;
+  color:red;
+  font-weight: bold;
+}
+.tempo {
+  font-size: 8em;
+  
 }
 .tempo-settings {
   display: flex;
@@ -81,6 +115,44 @@ export default {
 }
 .tempo-settings .increase-tempo {
   line-height: 28px;
+}
+input[type=range]{
+    -webkit-appearance: none;
+    background-color: transparent;
+    width: 70%;
+}
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+}
+input[type=range]:focus{
+    outline: none;
+}
+
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: red;
+    cursor: pointer;
+    margin-top: -9px;
+    
+}
+
+input[type=range]::-moz-range-thumb {
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: red;
+    cursor: pointer;
+    border: none;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 1px;
+    background: #ddd;
 }
 
 .start-stop {

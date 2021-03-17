@@ -11,7 +11,7 @@
     <input type="range" min="20" max="280" step="1" v-model="tempo" class="slider">
     <div class="adjust-tempo-btn increase-tempo"  v-on:click="increase">+</div>
     </div>
-    <div class="start-stop" @click="startMetronome()">{{ startStop }}</div>
+    <div class="start-stop" v-on:click="startMetronome">{{ startStop }}</div>
     <div class="measures">
       <div class="subtract-beats stepper" v-on:click="decreaseCount">-</div>
       <div class="measure-count">{{measureCount}}</div>
@@ -27,8 +27,10 @@
 
 //const metronome = new Timer(playClick, 60000 / tempo, {immediate: true}); 
 
+const metronome1 = new Audio('Metronome1.wav')
 //const metronome1 = new Audio('./assets/Metronome1.wav')
-const metronomeUp1 = new Audio('./assets/MetronomeUp1.wav')
+
+
 
 
 
@@ -105,13 +107,13 @@ methods: {
   startMetronome(){
     this.count = 0;
     if (!this.isRunning) {
-      metronomeUp1.play();
+      metronome1.play();
       this.isRunning = true;
-      this.startStop = 'START';
+      this.startStop = 'STOP';
     } else {
       //metronome.stop();
       this.isRunning = false;
-      this.startStop = 'STOP';
+      this.startStop = 'START';
     }
     
   },

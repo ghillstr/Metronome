@@ -27,8 +27,9 @@
 
 //const metronome = new Timer(playClick, 60000 / tempo, {immediate: true}); 
 
-const metronome1 = new Audio('Metronome1.wav')
-//const metronome1 = new Audio('./assets/Metronome1.wav')
+const hihat1 = new Audio('hihat-dist01.wav');
+const hihat2 = new Audio('hihat-dist02.wav');
+
 
 
 
@@ -107,13 +108,14 @@ methods: {
   startMetronome(){
     this.count = 0;
     if (!this.isRunning) {
-      metronome1.play();
       this.isRunning = true;
       this.startStop = 'STOP';
+      hihat1.play();
     } else {
       //metronome.stop();
       this.isRunning = false;
       this.startStop = 'START';
+      hihat2.play();
     }
     
   },

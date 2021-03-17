@@ -11,7 +11,7 @@
     <input type="range" min="20" max="280" step="1" v-model="tempo" class="slider">
     <div class="adjust-tempo-btn increase-tempo"  v-on:click="increase">+</div>
     </div>
-    <div class="start-stop" v-on:click="startMetronome">{{ startStop }}</div>
+    <div class="start-stop" v-on:click="startMetronome" >{{ startStop }}</div>
     <div class="measures">
       <div class="subtract-beats stepper" v-on:click="decreaseCount">-</div>
       <div class="measure-count">{{measureCount}}</div>
@@ -24,13 +24,15 @@
 </template>
 
 <script>
-
+import {Howl} from 'howler';
 //const metronome = new Timer(playClick, 60000 / tempo, {immediate: true}); 
+var hihat1 = new Howl({
+  url : ['./assets/hihat-dist01.mp3']
 
-const hihat1 = new Audio('./assets/hihat-dist01.wav');
-const hihat2 = new Audio('./assets/hihat-dist02.wav');
+})
+hihat1.play()
 
-hihat1.play();
+
 
 
 
@@ -45,7 +47,8 @@ data() {
     measureCount: 4,
     count : 0,
     isRunning : false,
-    startStop : 'START'
+    startStop : 'START',
+   
   };
 },
  computed: {
@@ -110,12 +113,12 @@ methods: {
     if (!this.isRunning) {
       this.isRunning = true;
       this.startStop = 'STOP';
-      hihat1.play()
+      this.hihat1.play()
     } else {
       //metronome.stop();
       this.isRunning = false;
       this.startStop = 'START';
-      hihat2.play()
+      //hihat2.play()
     }
     
   },

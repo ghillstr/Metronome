@@ -1,4 +1,4 @@
-# metronomr
+# metronome
 
 ## Project setup
 ```

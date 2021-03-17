@@ -23,11 +23,11 @@
   </div>
 </template>
 
-<script>
-import {Howl} from 'howler';
+<script >
 //const metronome = new Timer(playClick, 60000 / tempo, {immediate: true}); 
+
 var hihat1 = new Howl({
-  url : ['./assets/hihat-dist01.mp3']
+  src: ['./assets/hihat-dist01.mp3']
 
 })
 hihat1.play()

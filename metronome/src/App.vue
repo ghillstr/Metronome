@@ -13,7 +13,8 @@
     <input type="range" min="20" max="280" step="1" v-model="tempo" class="slider">
     <div class="adjust-tempo-btn increase-tempo"  v-on:click="increase">+</div>
     </div>
-    <div class="start-stop" v-on:click="startMetronome"  >{{ startStop }}</div>
+    <div class="start-stop" v-on:click="startMetronome" v-show="!isRunning" >{{ startStop }}</div>
+    <div class="start-stop" v-on:click="stopMetronome"  v-show="isRunning"  >{{ startStop }}</div>
     <div class="measures">
       <div class="subtract-beats stepper" v-on:click="decreaseCount">-</div>
       <div class="measure-count">{{measureCount}}</div>
@@ -26,18 +27,12 @@
 </template>
 
 <script >
-//const metronome = new Timer(playClick, 60000 / tempo, {immediate: true}); 
+import Timer from './timer.js'
 
-//let hihat1 = new Audio('./assets/hihat-dist01.mp3')
-const hihat1 = require('@/assets/hihat-dist01.mp3')
-const hihat2 = require('@/assets/hihat-dist02.wav')
+
  
-
-
-
-
-
-
+const hihat1 = require('@/assets/hihat-dist01.wav')
+const hihat2 = require('@/assets/hihat-dist02.wav')
 
 
 export default {
@@ -51,7 +46,8 @@ data() {
     isRunning : false,
     startStop : 'START',
     hihat1,
-    hihat2
+    hihat2,
+    metronome : 0
   };
 },
  computed: {
@@ -86,7 +82,9 @@ data() {
           return 'Allegro';
         }
 
-      }
+      },
+ 
+    
     },
 
 methods: {
@@ -94,7 +92,7 @@ methods: {
     if(this.tempo >= 280){
       return this.tempo = 280;
     }
-      this.tempo += 1;
+      this.tempo += 1; 
   },
   decrease() {
     if(this.tempo <= 20){
@@ -104,52 +102,59 @@ methods: {
   },
   increaseCount() {
     this.measureCount += 1;
+    this.count = 0;
   },
   decreaseCount() {
     if (this.measureCount <= 1){
     return this.measureCount = 1;
     }
-    this.measureCount -= 1;     
+    this.measureCount -= 1; 
+    this.count = 0;    
   },
   startMetronome(){
-    
+    this.metronome = new Timer(this.playClick, 60000 / this.tempo, {immediate: true});
     this.count = 0;
     
+    
     if (!this.isRunning) {
+      this.metronome.start();
       this.isRunning = true;
       this.startStop = 'STOP';
-      let hihat1 = new Audio(this.hihat1)
-      hihat1.play();
-      
-    } else {
-      //metronome.stop();
+    } 
+  },      
+    
+  stopMetronome(){
+    if(this.isRunning){
+      this.metronome.stop();
       this.isRunning = false;
       this.startStop = 'START';
-      console.log('calling play()');
-      let hihat2 = new Audio(this.hihat2)
-      hihat2.play()
     }
-    
   },
-  playClick() {
-    if (this.count === this.measureCount){
-      this.count = 0;
-    }
-    if (this.count === 0) {
-      //Metronome1.play();
-     // Metronome1.currentTime = 0;
-    } else {
-      //MetronomeUp1.play();
-      //MetronomeUp1.currentTime = 0;
+    
+      playClick() {
+        let hihat2 = new Audio(this.hihat2)
+        let hihat1 = new Audio(this.hihat1)
+        if(this.count === this.measureCount) {
+          this.count = 0;
+        }
+        if (this.count === 0) {
+      hihat2.play();
+      hihat2.currentTime = 0;
+        } else {
+      hihat1.play();
+      hihat1.currentTime = 0;
+        }
+        this.count++;
+  },
+  
+  
 
-    }
-    this.count ++;
-  }
+    },
+    
+   
+};
 
-    }
-  };
  
-
 </script>
 
 <style>

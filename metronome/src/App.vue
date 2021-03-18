@@ -1,3 +1,5 @@
+
+
 <template>
   <div id="app">
     <div class="metronome">
@@ -11,7 +13,7 @@
     <input type="range" min="20" max="280" step="1" v-model="tempo" class="slider">
     <div class="adjust-tempo-btn increase-tempo"  v-on:click="increase">+</div>
     </div>
-    <div class="start-stop" v-on:click="startMetronome" >{{ startStop }}</div>
+    <div class="start-stop" v-on:click="startMetronome"  >{{ startStop }}</div>
     <div class="measures">
       <div class="subtract-beats stepper" v-on:click="decreaseCount">-</div>
       <div class="measure-count">{{measureCount}}</div>
@@ -26,11 +28,11 @@
 <script >
 //const metronome = new Timer(playClick, 60000 / tempo, {immediate: true}); 
 
-var hihat1 = new Howl({
-  src: ['./assets/hihat-dist01.mp3']
+//let hihat1 = new Audio('./assets/hihat-dist01.mp3')
+const hihat1 = require('@/assets/hihat-dist01.mp3')
+const hihat2 = require('@/assets/hihat-dist02.wav')
+ 
 
-})
-hihat1.play()
 
 
 
@@ -48,7 +50,8 @@ data() {
     count : 0,
     isRunning : false,
     startStop : 'START',
-   
+    hihat1,
+    hihat2
   };
 },
  computed: {
@@ -109,16 +112,22 @@ methods: {
     this.measureCount -= 1;     
   },
   startMetronome(){
+    
     this.count = 0;
+    
     if (!this.isRunning) {
       this.isRunning = true;
       this.startStop = 'STOP';
-      this.hihat1.play()
+      let hihat1 = new Audio(this.hihat1)
+      hihat1.play();
+      
     } else {
       //metronome.stop();
       this.isRunning = false;
       this.startStop = 'START';
-      //hihat2.play()
+      console.log('calling play()');
+      let hihat2 = new Audio(this.hihat2)
+      hihat2.play()
     }
     
   },
